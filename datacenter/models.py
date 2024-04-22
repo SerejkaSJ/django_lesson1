@@ -2,12 +2,6 @@ from django.db import models
 import django.utils.timezone
 
 
-def format_duration(td):
-    minutes, seconds = divmod(td.seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    return f'{td.days} days {hours} hours {minutes} minutes'
-
-
 class Passcard(models.Model):
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now=True)
