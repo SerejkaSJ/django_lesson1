@@ -6,9 +6,7 @@ from django.shortcuts import render, get_object_or_404
 
 def is_visit_long(visit, minutes=60):
     duration = visit.get_duration()
-    if duration.days > 0:
-        return False
-    if duration.seconds > minutes * 60:
+    if duration.total_seconds() > minutes * 60:
         return True
     return False
 
@@ -18,8 +16,6 @@ def passcard_info_view(request, passcode):
     visits = Visit.objects.filter(passcard=passcard)
     this_passcard_visits = []
     for visit in visits:
-        if not visit.leaved_at:
-            continue
         this_passcard_visits.append({
             'entered_at': visit.entered_at,
             'duration': format_duration(visit.get_duration()),
